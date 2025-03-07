@@ -1,0 +1,108 @@
+html, body {
+  padding-top: 0px;
+  height: 100%;
+  width: 100%;
+  font-size: 12px !important;
+  color: #000 !important;
+  font-family: Arial !important;  
+}
+
+.webpage{
+  width: 100vw;
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 15% 85%;
+}
+
+input[type="range"] {
+  /* removing default appearance */
+  -webkit-appearance: none;
+  appearance: none; 
+  /* creating a custom design */
+  width: 100%;
+  cursor: pointer;
+  outline: none;
+  border-radius: 15px;
+  /*  overflow: hidden;  remove this line*/
+  
+  /* New additions */
+  height: 6px;
+  background: #ccc;
+}
+
+/* Thumb: Firefox */
+input[type="range"]::-moz-range-thumb {
+  height: 15px;
+  width: 15px;
+  background-color: #f50;
+  border-radius: 50%;
+  border: none;
+  
+  /* box-shadow: -407px 0 0 400px #f50; emove this line */
+  transition: .2s ease-in-out;
+}
+
+.range {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  height: 4rem;
+  width: 80%;
+  background: #fff;
+  padding: 0px 10px;
+}
+
+.value {
+  font-size: 26px;    
+  width: 50px;
+  text-align: center;
+}
+
+.container {
+  width: 100%;
+  height: 100vh;
+}
+
+.leftpane {
+  width: 20%;
+  height: 20vh;
+}
+
+.rightpane {
+  float: left;
+  width: 80%;
+  height: 20vh;
+}
+
+.bottompane {
+  width: 100%;
+  height: 80vh;
+}
+
+body {
+  margin: 0!important;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.img-wrap {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  overflow: hidden;
+  padding-top: 5%;
+}
+
+.plot {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  /*box-sizing: border-box;
+  padding-bottom: 5%;
+  padding-right: 10px;*/
+}
