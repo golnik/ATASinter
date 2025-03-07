@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Including Font Awesome -->
   <link rel="stylesheet" href="style.css"/> 
 
+  <!--MathJax-->
+  <script type="text/javascript" id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
+  </script>
+
   <script src="math.js"></script>
 
   <script src="script.js"></script>
@@ -19,6 +24,25 @@
   <div class="container">
     <div class="d-flex">
       <div class="leftpane">
+        This model demonstrates the attosecond transient absorption spectra computed using the following formula:
+        $$
+        \sigma (\omega,\tau) = \frac{4\pi\omega}{c} 
+         \text{Im} \sum_I \sum_J
+          \exp\left( i (E_I - E_J) \tau \right)
+          \sum_F \langle \Phi_I | \hat{\mu} | \Phi_F \rangle
+                 \langle \Phi_F | \hat{\mu} | \Phi_J \rangle 
+          \left(
+            \frac{1}{\tilde{E}_F - E_I - \omega}
+          + \frac{1}{\tilde{E}^*_F - E_J + \omega}
+          \right)
+        $$
+        See these references for detailed discussion:
+        <ol>
+          <li>R. Santra <i>et al.</i>, Phys. Rev. A <b>83</b>, 033405 (2011).</li>
+          <li>N. Golubev <i>et al.</i>, Phys. Rev. Lett. <b>127</b>, 123001 (2021).</li>
+        </ol>
+      </div>      
+      <div class="middlepane">
         <img class="img-wrap" src="diagram.svg"></img>
       </div>
       <div class="rightpane">
@@ -41,9 +65,13 @@
       </div>
     </div>
     
-    <div class="bottompane">
-      <div class="plot" id="myDiv"></div>
+    <div class="bottomleft">
+      <div class="plot" id="ATAS"></div>
     </div>
+
+    <div class="bottomright">
+      <div class="plot" id="lineout"></div>
+    </div>    
   </div>
 
   <script>

@@ -44,7 +44,7 @@ function compute_cs(t, w, D){
   for(var I = 0; I < NI; I++){
     for(var J = 0; J < NI; J++){
       var i = math.complex(0.,1.);
-      var phi = -(EI[I] - EI[J]) * t;
+      var phi = (EI[I] - EI[J]) * t;
       var xiIJ = math.exp( math.multiply(i,phi) );
 
       for(var F = 0; F < NF; F++){
@@ -77,13 +77,41 @@ function compute_spec(D){
   return sigma;
 }
 
+function compute_lineouts(D){
+  //2d array of spectra
+  var sigma = new Array(NI*NF);
+  var indx = 0;
+  for(var i = 0; i < NI; i++) {
+    for(var f = 0; f < NF; f++) {
+      sigma[indx] = new Array(Nt);
+      for(var it = 0; it < Nt; it++) {
+        var t = tgrid[it];
+        var w = EF[f] - EI[i];
+        sigma[indx][it] = compute_cs(t,w,D);
+      }
+      indx+=1;
+    }
+  }
+
+  //normalize to 1
+  for(var indx = 0; indx < NI*NF; indx++) {
+    var sigma_min = Math.min(...sigma[indx].flat());
+    var sigma_max = Math.max(...sigma[indx].flat());
+    for(var it = 0; it < Nt; it++) {
+      sigma[indx][it] = (sigma[indx][it] - sigma_min) / (sigma_max - sigma_min) - 0.5;
+    }
+  }
+
+  return sigma;
+}
+
 var tgrid_fs = tgrid.map(function(t){ return t * au2fs; });
 var Egrid_eV = Egrid.map(function(E){ return E * au2eV; });
 
 var global_margin = {
-  l: 150,
-  r: 15,
-  b: 100,
+  l: 100,
+  r: 50,
+  b: 80,
   t: 25,
   pad: 0
 }
@@ -105,9 +133,28 @@ var layout = {
     title: 'Time [fs]',
   },
   yaxis: {
-    title: 'Energy [eV]',
+    title: {
+      text: 'Energy [eV]',
+      standoff: 30
+    }
   },
 };
+
+var lineout_layout = {
+  showlegend: false,
+  font: global_font,
+  margin: global_margin,
+  displayModeBar: false,
+  responsive: true,
+  yaxis: {
+    range: [Egrid_eV[0],Egrid_eV[NE-1]]
+  },
+  xaxis: {
+    title: 'Time [fs]',
+  }
+};
+
+var colors = ["rgb(255, 0, 0)","rgb(0, 0, 255)","rgb(0, 150, 0)","rgb(255, 0, 255)"];
 
 function plot_spec(D1I1F,D1I2F,D2I1F,D2I2F) {
   var D = [
@@ -115,7 +162,8 @@ function plot_spec(D1I1F,D1I2F,D2I1F,D2I2F) {
     [D2I1F, D2I2F]
   ];
 
-  sigma = compute_spec(D);
+  var sigma    = compute_spec(D);
+  var lineouts = compute_lineouts(D);
 
   var data = [ {
       z: sigma,
@@ -131,5 +179,31 @@ function plot_spec(D1I1F,D1I2F,D2I1F,D2I2F) {
       }
     }
   ];
-  Plotly.newPlot('myDiv', data, layout);
+  
+  Plotly.newPlot('ATAS', data, layout);
+
+  var traces = [];
+  var indx = 0;
+  for(var i = 0; i<NI; i++){
+    for(var f = 0; f<NF; f++){
+      var factor = D[i][f];
+      var w = (EF[f] - EI[i]) * au2eV;
+      var lineout = lineouts[indx].map(function(v){ return 0.08*Math.abs(factor)*v + w; });
+
+      var trace = {
+        x: tgrid_fs,
+        y: lineout,
+        mode: 'lines',
+        line: {
+          color: colors[indx],
+          width: 3
+        }        
+      };
+      traces.push(trace);
+
+      indx++;
+    }
+  }
+
+  Plotly.newPlot('lineout', traces, lineout_layout);
 };
