@@ -83,14 +83,7 @@ input[type="range"]::-moz-range-thumb {
   height: 20vh;
 }
 
-.bottomleft {
-  float: left;
-  width: 50%;
-  height: 76vh;
-  padding-bottom: 1%;
-}
-
-.bottomright {
+.bottompane {
   float: left;
   width: 50%;
   height: 76vh;

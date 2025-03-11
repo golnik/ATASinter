@@ -1,42 +1,26 @@
-var au2fs = 0.024188843265864002;
-var au2eV = 27.211386245988;
-var c = 137.;
+var slider = document.getElementById('slider');
 
-var tmin = 0./au2fs;
-var tmax = 100./au2fs;
-var Nt = 100;
-var dt = (tmax - tmin) / (Nt - 1);
+wI1F1 = (EF[0] - EI[0])*au2eV;
+wI1F2 = (EF[1] - EI[0])*au2eV;
+wI2F1 = (EF[0] - EI[1])*au2eV;
+wI2F2 = (EF[1] - EI[1])*au2eV;
 
-var tgrid = new Array(Nt);
+noUiSlider.create(slider, {
+  range: {
+    'min': Emin*au2eV,
+    'max': Emax*au2eV
+  },
 
-for(var it = 0; it < Nt; it++){
-  tgrid[it] = tmin + dt * it;
-}
+  step: 0.001/au2eV,
 
-var Emin = 21.4/au2eV;
-var Emax = 21.75/au2eV;
-var NE = 100;
-var dE = (Emax - Emin) / (NE - 1);
+  // Handles start at ...
+  start: [wI2F1,wI2F2,wI1F1,wI1F2],
+  tooltips: wNumb({decimals: 3}),
 
-var Egrid = new Array(NE);
-
-for(var iE = 0; iE < NE; iE++){
-  Egrid[iE] = Emin + dE * iE;
-}
-
-var NI = 2;
-var EI = [
-  0.00000000/au2eV,
-  0.17749368/au2eV
-];
-
-var NF = 2;
-var EF = [
-  21.62407061/au2eV,
-  21.67504277/au2eV
-];
-
-var G = 0.02/au2eV;
+  // Put '0' at the bottom of the slider
+  direction: 'rtl',
+  orientation: 'vertical'
+});
 
 function compute_cs(t, w, D){
   var res = 0.;
@@ -74,27 +58,28 @@ function compute_spec(D){
       sigma[it][iE] = compute_cs(t,w,D);
     }
   }
+
+  global_sigma_min = Math.min(...sigma.flat());
+  global_sigma_max = Math.max(...sigma.flat());
+
   return sigma;
 }
 
-function compute_lineouts(D){
-  //2d array of spectra
-  var sigma = new Array(NI*NF);
-  var indx = 0;
-  for(var i = 0; i < NI; i++) {
-    for(var f = 0; f < NF; f++) {
-      sigma[indx] = new Array(Nt);
-      for(var it = 0; it < Nt; it++) {
-        var t = tgrid[it];
-        var w = EF[f] - EI[i];
-        sigma[indx][it] = compute_cs(t,w,D);
-      }
-      indx+=1;
+function compute_lineouts(D,energies){
+  var size = energies.length;
+
+  var sigma = new Array(size);
+  for(var indx = 0; indx < size; indx++) {
+    sigma[indx] = new Array(Nt);
+    var w = energies[indx];
+    for(var it = 0; it < Nt; it++) {
+      var t = tgrid[it];
+      sigma[indx][it] = compute_cs(t,w,D);
     }
   }
 
   //normalize to 1
-  for(var indx = 0; indx < NI*NF; indx++) {
+  for(var indx = 0; indx < size; indx++) {
     var sigma_min = Math.min(...sigma[indx].flat());
     var sigma_max = Math.max(...sigma[indx].flat());
     for(var it = 0; it < Nt; it++) {
@@ -122,7 +107,6 @@ var global_font = {
   color: '#444'
 }
 
-
 var layout = {
   showlegend: false,
   font: global_font,
@@ -130,7 +114,9 @@ var layout = {
   displayModeBar: false,
   responsive: true,
   xaxis: {
-    title: 'Time [fs]',
+    title: {
+      text: 'Time [fs]'
+    }
   },
   yaxis: {
     title: {
@@ -138,6 +124,22 @@ var layout = {
       standoff: 30
     }
   },
+
+  shapes: []
+
+  /*shapes: [
+    {
+        type: 'line',
+        x0: 80,
+        y0: 21.5,
+        x1: 100,
+        y1: 21.5,
+        line:{
+            color: 'rgb(255, 0, 0)',
+            width: 10,
+        }
+    }
+  ]*/    
 };
 
 var lineout_layout = {
@@ -150,60 +152,121 @@ var lineout_layout = {
     range: [Egrid_eV[0],Egrid_eV[NE-1]]
   },
   xaxis: {
-    title: 'Time [fs]',
-  }
+    title: {
+      text: 'Time [fs]'
+    }
+  } 
 };
 
-var colors = ["rgb(255, 0, 0)","rgb(0, 0, 255)","rgb(0, 150, 0)","rgb(255, 0, 255)"];
+function get_dipoles() {
+  D1I1F = document.getElementById("sD1").value;
+  D1I2F = document.getElementById("sD2").value;
+  D2I1F = document.getElementById("sD3").value;
+  D2I2F = document.getElementById("sD4").value;
 
-function plot_spec(D1I1F,D1I2F,D2I1F,D2I2F) {
+  document.getElementById("vD1").innerHTML = D1I1F;
+  document.getElementById("vD2").innerHTML = D1I2F;
+  document.getElementById("vD3").innerHTML = D2I1F;
+  document.getElementById("vD4").innerHTML = D2I2F;
+
   var D = [
     [D1I1F, D1I2F],
     [D2I1F, D2I2F]
   ];
 
-  var sigma    = compute_spec(D);
-  var lineouts = compute_lineouts(D);
+  return D;
+}
 
-  var data = [ {
-      z: sigma,
-      x: tgrid_fs,
-      y: Egrid_eV,
-      type: 'contour',
-      transpose: true,
-      showlines: true,
-      colorscale: 'Jet',
-      ncontours: 100,
-      line:{
-        width:0
-      }
-    }
-  ];
-  
-  Plotly.newPlot('ATAS', data, layout);
+const zeros = (m, n) => [...Array(m)].map(e => Array(n).fill(0));
+
+var data = [ {
+    z: zeros(NI,NF),
+    x: tgrid_fs,
+    y: Egrid_eV,
+    type: 'contour',
+    transpose: true,
+    showlines: true,
+    colorscale: 'Jet',
+    ncontours: 100,
+    line:{
+      width:0
+    },
+    colorbar: {
+      orientation: 'v'
+    },
+    showscale: false,  //hide colorbar    
+  }
+];
+
+Plotly.newPlot('ATAS', data, layout);
+Plotly.newPlot('lineout', [], lineout_layout);
+
+function plot_ATAS() {
+  var D = get_dipoles();
+  var sigma = compute_spec(D);
+  data[0].z = sigma;
+  Plotly.react('ATAS', data, layout);
+};
+
+function plot_lineouts() {
+  var D = get_dipoles();
+
+  var lineout_energies_eV = slider.noUiSlider.get(true);
+  var lineout_energies = lineout_energies_eV.map(function(E){ return E/au2eV; });
+  var nlineouts = lineout_energies.length;
+
+  var lineouts = compute_lineouts(D,lineout_energies);
 
   var traces = [];
-  var indx = 0;
-  for(var i = 0; i<NI; i++){
-    for(var f = 0; f<NF; f++){
-      var factor = D[i][f];
-      var w = (EF[f] - EI[i]) * au2eV;
-      var lineout = lineouts[indx].map(function(v){ return 0.08*Math.abs(factor)*v + w; });
+  var shapes = [];
+  for(var indx = 0; indx<nlineouts; indx++){
+    var w = lineout_energies_eV[indx];
+    var lineout = lineouts[indx].map(function(v){ return 0.05*v + w; });
 
-      var trace = {
-        x: tgrid_fs,
-        y: lineout,
-        mode: 'lines',
-        line: {
-          color: colors[indx],
-          width: 3
-        }        
-      };
-      traces.push(trace);
+    var trace = {
+      x: tgrid_fs,
+      y: lineout,
+      mode: 'lines',
+      line: {
+        color: colors[indx],
+        width: 3
+      }        
+    };
+    traces.push(trace);
 
-      indx++;
-    }
+    var shape = {
+      type: 'line',
+      x0: 80,
+      y0: lineout_energies_eV[indx],
+      x1: 100,
+      y1: lineout_energies_eV[indx],
+      line:{
+        color: colors[indx],
+        width: 4,
+      }
+    };
+    shapes.push(shape);
   }
 
-  Plotly.newPlot('lineout', traces, lineout_layout);
+  layout.shapes = shapes;
+
+  Plotly.relayout('ATAS', layout);
+  Plotly.react('lineout', traces, lineout_layout);
 };
+
+function plot() {
+  plot_ATAS();
+  plot_lineouts();
+}
+
+function doSomething(values, handle, unencoded, tap, positions, noUiSlider) {
+  // values: Current slider values (array);
+  // handle: Handle that caused the event (number);
+  // unencoded: Slider values without formatting (array);
+  // tap: Event was caused by the user tapping the slider (boolean);
+  // positions: Left offset of the handles (array);
+  // noUiSlider: slider public Api (noUiSlider);
+}
+
+// Binding signature
+slider.noUiSlider.on('update',plot_lineouts);
