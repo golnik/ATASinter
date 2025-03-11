@@ -4,7 +4,7 @@ var c = 137.;
 
 var tmin = 0./au2fs;
 var tmax = 100./au2fs;
-var Nt = 100;
+var Nt = 101;
 var dt = (tmax - tmin) / (Nt - 1);
 
 var tgrid = new Array(Nt);
@@ -15,7 +15,7 @@ for(var it = 0; it < Nt; it++){
 
 var Emin = 21.4/au2eV;
 var Emax = 21.75/au2eV;
-var NE = 100;
+var NE = 101;
 var dE = (Emax - Emin) / (NE - 1);
 
 var Egrid = new Array(NE);

@@ -172,7 +172,6 @@ var lineout_layout = {
   shapes: []
 };
 
-// Appending money-formatting
 var Format = wNumb({
 	decimals: 1,
 });
@@ -287,3 +286,71 @@ function plot() {
 
 // Binding signature
 slider.noUiSlider.on('update',plot_lineouts);
+
+//set all parameters to default values
+function set_default() {
+  document.getElementById("sD1").value = 1.0;
+  document.getElementById("sD2").value = 1.0;
+  document.getElementById("sD3").value = 1.0;
+  document.getElementById("sD4").value = 1.0;
+  document.getElementById("sCI").value = 0.5;
+
+  slider.noUiSlider.set([wI2F1,wI2F2,wI1F1,wI1F2]);
+
+  plot();
+
+  Plotly.relayout('ATAS', {
+    'xaxis.range': [tgrid_fs[0],tgrid_fs[Nt-1]],
+    'xaxis.autorange': false,
+    'yaxis.range': [Egrid_eV[0],Egrid_eV[NE-1]],    
+    'yaxis.autorange': false
+  });
+
+  Plotly.relayout('lineout', {
+    'xaxis.range': [tgrid_fs[0],tgrid_fs[Nt-1]],
+    'xaxis.autorange': false,
+    'yaxis.range': [Egrid_eV[0],Egrid_eV[NE-1]],    
+    'yaxis.autorange': false
+  });
+
+  return;
+}
+
+var OuputNumber = wNumb({
+	decimals: 7,
+});
+
+
+//download data
+function get_data() {
+  var [D,cI] = get_parameters();
+  var sigma = compute_spec(D,cI);
+
+  //output string
+  var output = "#tau(fs) w(eV) sigma\n";
+
+  for(var it = 0; it<Nt; it++){
+    var tau = tgrid_fs[it];
+    for(var iE = 0; iE<NE; iE++){
+      var w = Egrid_eV[iE];
+      var val = sigma[it][iE];
+
+      output += OuputNumber.to(tau) + ' ' + OuputNumber.to(w) + ' ' + OuputNumber.to(val) + '\n';
+    }
+  }
+
+  var filename = "data.dat";
+
+  var element = document.createElement('a');
+  element.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(output));
+  element.setAttribute('download', filename);
+
+  element.style.display = 'none';
+  document.body.appendChild(element);
+
+  element.click();
+
+  document.body.removeChild(element);
+
+  return;
+}
