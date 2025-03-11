@@ -5,24 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>ATAS model</title>
 
-  <script src="math.js"></script>
   <link rel="stylesheet" href="style.css"/>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/foundation-sites@6.7.4/dist/css/foundation.min.css"> 
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- Including Font Awesome -->
-
-  <!-- plot.ly -->
-  <script src="https://cdn.plot.ly/plotly-3.0.1.min.js" charset="utf-8"></script>
-
+  <!-- EXTERNAL LIBRARIES -->
+  <!-- complex numbers: https://mathjs.org/ -->
+  <script src="external/math.js"></script>
+  <!-- plotly: https://plotly.com/javascript/ -->
+  <script src="external/plotly-3.0.1.min.js" charset="utf-8"></script>
   <!--MathJax-->
-  <script type="text/javascript" id="MathJax-script" async
-    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml.js">
-  </script>
-
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/wnumb/1.2.0/wNumb.min.js" charset="utf-8"></script>
-
-  <link rel="stylesheet" type="text/css" href="nouislider.css" />
-  <script src="nouislider.js"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <!--wNumb: https://refreshless.com/wnumb/ -->
+  <script src="external/wNumb.min.js" charset="utf-8"></script>
+  <!--noUiSlider: https://refreshless.com/nouislider/ -->
+  <link rel="stylesheet" type="text/css" href="external/nouislider.css"/>
+  <script src="external/nouislider.js"></script>
 
   <script>
     var colors = ["rgb(255, 0, 0)","rgb(0, 0, 255)","rgb(0, 150, 0)","rgb(255, 0, 255)"];
@@ -117,13 +113,13 @@
       </div>
     </div>
 
-    <div class="bottompane" style="width: 49%;">
+    <div class="bottompane" style="width: 48%;">
       <div class="plot" id="ATAS"></div>
     </div>
     <div class="bottompane" style="width: 2%; padding-left: 20px; margin-bottom: 20px; float: center;">
       <div id="slider" style="height: calc(100% - 100px); margin-top: 20px;"></div>     
     </div>
-    <div class="bottompane" style="width: 49%;">
+    <div class="bottompane" style="width: 48%;">
       <div class="plot" id="lineout"></div>
     </div>
   </div>
