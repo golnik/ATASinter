@@ -30,6 +30,7 @@
         $$
         \sigma (\omega,\tau) = \frac{4\pi\omega}{c} 
          \text{Im} \sum_I \sum_J
+          c_I c_J
           \exp\left( i (E_I - E_J) \tau \right)
           \sum_F \langle \Phi_I | \hat{\mu} | \Phi_F \rangle
                  \langle \Phi_F | \hat{\mu} | \Phi_J \rangle 
@@ -49,21 +50,44 @@
       </div>
       <div class="rightpane">
         <div class="range">
-          <input type="range" id="sD1" onchange="plot()" style="background-color: rgb(255, 0, 0);" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+          <input type="range" id="sD1" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+        </div>
+        <div class="label">
+          <p>$$\langle \Phi_1 | \hat{\mu} | \Phi_{F_1} \rangle =$$</p>
           <div class="value" id="vD1"></div>
         </div>
+
         <div class="range">
-          <input type="range" id="sD2" onchange="plot()" style="background-color: rgb(0, 0, 255);" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+          <input type="range" id="sD2" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+        </div>
+        <div class="label">
+          <p>$$\langle \Phi_1 | \hat{\mu} | \Phi_{F_2} \rangle =$$</p>
           <div class="value" id="vD2"></div>
         </div>
+
         <div class="range">
-          <input type="range" id="sD3" onchange="plot()" style="background-color: rgb(0, 150, 0);" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+          <input type="range" id="sD3" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+        </div>
+        <div class="label">
+          <p>$$\langle \Phi_2 | \hat{\mu} | \Phi_{F_1} \rangle =$$</p>
           <div class="value" id="vD3"></div>
         </div>
+
         <div class="range">
-          <input type="range" id="sD4" onchange="plot()" style="background-color: rgb(255, 0, 255);" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+          <input type="range" id="sD4" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+        </div>
+        <div class="label">
+          <p>$$\langle \Phi_2 | \hat{\mu} | \Phi_{F_2} \rangle =$$</p>
           <div class="value" id="vD4"></div>
         </div>
+
+        <div class="range">
+          <input type="range" id="sCI" onchange="plot()" type="range" min="0.0" max="1.0" value="0.5" step=".1" />
+        </div>
+        <div class="label">
+          <p>$$c^2_1 =$$</p>
+          <div class="value" id="vCI"></div>
+        </div>        
       </div>
     </div>
 
