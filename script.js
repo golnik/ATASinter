@@ -125,21 +125,7 @@ var layout = {
     }
   },
 
-  shapes: []
-
-  /*shapes: [
-    {
-        type: 'line',
-        x0: 80,
-        y0: 21.5,
-        x1: 100,
-        y1: 21.5,
-        line:{
-            color: 'rgb(255, 0, 0)',
-            width: 10,
-        }
-    }
-  ]*/    
+  shapes: []   
 };
 
 var lineout_layout = {
@@ -257,15 +243,6 @@ function plot_lineouts() {
 function plot() {
   plot_ATAS();
   plot_lineouts();
-}
-
-function doSomething(values, handle, unencoded, tap, positions, noUiSlider) {
-  // values: Current slider values (array);
-  // handle: Handle that caused the event (number);
-  // unencoded: Slider values without formatting (array);
-  // tap: Event was caused by the user tapping the slider (boolean);
-  // positions: Left offset of the handles (array);
-  // noUiSlider: slider public Api (noUiSlider);
 }
 
 // Binding signature
