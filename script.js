@@ -123,7 +123,7 @@ var global_margin = {
   l: 100,
   r: 50,
   b: 80,
-  t: 25,
+  t: 10,
   pad: 0
 }
 
@@ -286,6 +286,11 @@ function plot_lineouts() {
 function plot() {
   plot_ATAS();
   plot_lineouts();
+}
+
+function info_toggle(id) {
+  var element = document.getElementById(id);
+  element.style.display = element.style.display === 'none' ? 'block' : 'none';
 }
 
 // Binding signature

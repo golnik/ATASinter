@@ -82,6 +82,9 @@ input[type="range"]::-moz-range-thumb {
   width: 50%;
   height: 76vh;
   padding-bottom: 1%;
+  margin-top: 24px;
+  display: flex;
+  flex-direction: column;
 }
 
 body {
@@ -110,10 +113,62 @@ ul, ol {
 .plot {
   position: relative;
   width: 100%;
-  height: 100%;
+  flex: 1 1 auto;
+  min-height: 0;
   /*box-sizing: border-box;
   padding-bottom: 5%;
   padding-right: 10px;*/
+}
+
+.title_row {
+  display: flex;
+  flex: 0 0 auto;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  padding-bottom: 0;
+}
+
+.graph_title {
+  text-align: center;
+  font-weight: bold;
+  margin: 0;
+}
+
+.info_icon {
+  opacity: 0.5;
+  transition: 0.3s;
+  cursor: pointer;
+  margin-left: 6px;
+  font-size: 14px;
+  color: #f50;
+}
+
+.info_icon:hover {
+  opacity: 1;
+}
+
+.info_box {
+  position: absolute;
+  top: 100%;
+  background: #fff;
+  border: 1px solid #ccc;
+  border-left: 3px solid #f50;
+  border-radius: 8px;
+  padding: 10px 14px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+  font-size: 13px;
+  line-height: 1.5;
+  color: #333;
+  z-index: 1000;
+  max-width: 420px;
+  text-align: justify;
+}
+
+.info_box p {
+  margin: 0;
 }
 
 .button {

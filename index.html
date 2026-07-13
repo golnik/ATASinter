@@ -17,6 +17,8 @@
   <!--noUiSlider: https://refreshless.com/nouislider/ -->
   <link rel="stylesheet" type="text/css" href="external/nouislider.css"/>
   <script src="external/nouislider.js"></script>
+  <!--Font Awesome (info icons)-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
 
   <link rel="stylesheet" href="style.css"/>
   <script src="parameters.js"></script>
@@ -97,12 +99,26 @@
     </div>
 
     <div class="bottompane" style="width: 48%;">
+      <div class="title_row">
+        <figcaption class="graph_title">Attosecond Transient Absorption Spectrum</figcaption>
+        <i class="fas fa-info-circle info_icon" onclick="info_toggle('ATAS-info')"></i>
+        <div class="info_box" id="ATAS-info" style="display: none;">
+          <p>This plot shows the two-dimensional transient absorption spectrum \(\sigma(\omega,\tau)\) as a function of the pump-probe time delay \(\tau\) (horizontal axis) and the photon energy \(\omega\) (vertical axis), computed from the formula above. The colored bars on the right edge mark the four photon energies selected with the vertical slider, matching the colors of the corresponding lineouts shown in the panel on the right.</p>
+        </div>
+      </div>
       <div class="plot" id="ATAS"></div>
     </div>
     <div class="bottompane" style="width: 2%; padding-left: 20px; margin-bottom: 20px; float: center;">
-      <div id="slider" style="height: calc(100% - 100px); margin-top: 20px;"></div>     
+      <div id="slider" style="height: calc(100% - 100px); margin-top: 20px;"></div>
     </div>
     <div class="bottompane" style="width: 48%;">
+      <div class="title_row">
+        <figcaption class="graph_title">Energy-Resolved Lineouts</figcaption>
+        <i class="fas fa-info-circle info_icon" onclick="info_toggle('lineout-info')"></i>
+        <div class="info_box" id="lineout-info" style="display: none;">
+          <p>This plot shows lineouts of the transient absorption spectrum at the four photon energies selected with the vertical slider between the two plots. Each trace shows how the absorption signal at a given final-state transition energy oscillates as a function of the pump-probe delay \(\tau\), revealing the coherent dynamics of the superposition state. The color of each trace matches the corresponding energy marker on the spectrum to the left.</p>
+        </div>
+      </div>
       <div class="plot" id="lineout"></div>
     </div>
   </div>
