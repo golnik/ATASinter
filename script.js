@@ -139,6 +139,8 @@ var layout = {
   margin: global_margin,
   displayModeBar: false,
   responsive: true,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor: 'rgba(0,0,0,0)',
   xaxis: {
     title: {
       text: 'Time [fs]'
@@ -151,7 +153,7 @@ var layout = {
     }
   },
 
-  shapes: []   
+  shapes: []
 };
 
 var lineout_layout = {
@@ -160,6 +162,8 @@ var lineout_layout = {
   margin: global_margin,
   displayModeBar: false,
   responsive: true,
+  paper_bgcolor: 'rgba(0,0,0,0)',
+  plot_bgcolor: 'rgba(0,0,0,0)',
   yaxis: {
     range: [Egrid_eV[0],Egrid_eV[NE-1]]
   },
