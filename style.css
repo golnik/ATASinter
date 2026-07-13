@@ -47,7 +47,7 @@ input[type="range"]::-moz-range-thumb {
   gap: 1rem;
   max-width: 500px;
   margin: 0;
-  height: 4vh;  width: 50%;
+  height: 3.6vh;  width: 50%;
   padding: 0px 10px;
 }
 
@@ -56,7 +56,7 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
   gap: 1rem;
   margin: 0;
-  height: 4vh;
+  height: 3.6vh;
   width: 15%;
 }
 
@@ -75,6 +75,26 @@ input[type="range"]::-moz-range-thumb {
 
 .upperpanel {
   height: 20vh;
+}
+
+.energy-levels-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.energy-levels-panel .img-wrap {
+  flex: 1 1 auto;
+  min-height: 0;
+  object-fit: contain;
+}
+
+.controls-panel .title_row {
+  height: 2vh;
+}
+
+.energy-levels-panel .title_row,
+.controls-panel .title_row {
+  margin-bottom: 20px;
 }
 
 .bottompane {
@@ -163,12 +183,18 @@ ul, ol {
   line-height: 1.5;
   color: #333;
   z-index: 1000;
-  max-width: 420px;
+  width: 340px;
+  max-width: calc(100vw - 40px);
   text-align: justify;
 }
 
 .info_box p {
   margin: 0;
+}
+
+.controls-panel .info_box {
+  left: auto;
+  right: 0;
 }
 
 .button {

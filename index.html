@@ -52,12 +52,26 @@
         <button class="button" onclick="get_data()">Download Data</button>
         <button class="button" onclick="toggleHelp()">Help</button>
       </div>      
-      <div class="upperpanel" style="width: 20%;">
+      <div class="upperpanel energy-levels-panel" style="width: 20%;">
+        <div class="title_row">
+          <figcaption class="graph_title">System Energy Levels</figcaption>
+          <i class="fas fa-info-circle info_icon" onclick="info_toggle('energy-levels-info')"></i>
+          <div class="info_box" id="energy-levels-info" style="display: none;">
+            <p>This diagram shows the four electronic states of the system: the two lowest-energy states, \(\Phi_1\) and \(\Phi_2\), which form the coherent superposition prepared by the pump pulse, and the two higher-lying final states, \(\Phi_{F_1}\) and \(\Phi_{F_2}\), reached upon absorption of the probe photon. The colored arrows mark the four allowed transitions, matching the colors of the corresponding sliders in the panel on the right.</p>
+          </div>
+        </div>
         <img class="img-wrap" src="diagram.svg"></img>
       </div>
-      <div class="upperpanel" style="width: 20%;">
+      <div class="upperpanel controls-panel" style="width: 20%;">
+        <div class="title_row">
+          <figcaption class="graph_title">Transition Dipole Moments &amp; Population</figcaption>
+          <i class="fas fa-info-circle info_icon" onclick="info_toggle('controls-info')"></i>
+          <div class="info_box" id="controls-info" style="display: none;">
+            <p>The four colored sliders set the transition dipole matrix elements \(\langle \Phi_I | \hat{\mu} | \Phi_F \rangle\) between the initial states \(\Phi_1\), \(\Phi_2\) and the final states \(\Phi_{F_1}\), \(\Phi_{F_2}\), matching the colors of the arrows in the energy level diagram. The bottom slider, \(c^2_1\), sets the population weight of \(\Phi_1\) relative to \(\Phi_2\) in the initial superposition state.</p>
+          </div>
+        </div>
         <div class="range">
-          <input type="range" id="sD1" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+          <input type="range" id="sD1" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" />
         </div>
         <div class="label">
           <p>$$\langle \Phi_1 | \hat{\mu} | \Phi_{F_1} \rangle =$$</p>
@@ -65,7 +79,7 @@
         </div>
 
         <div class="range">
-          <input type="range" id="sD2" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+          <input type="range" id="sD2" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" />
         </div>
         <div class="label">
           <p>$$\langle \Phi_1 | \hat{\mu} | \Phi_{F_2} \rangle =$$</p>
@@ -73,7 +87,7 @@
         </div>
 
         <div class="range">
-          <input type="range" id="sD3" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+          <input type="range" id="sD3" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" />
         </div>
         <div class="label">
           <p>$$\langle \Phi_2 | \hat{\mu} | \Phi_{F_1} \rangle =$$</p>
@@ -81,7 +95,7 @@
         </div>
 
         <div class="range">
-          <input type="range" id="sD4" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" /> 
+          <input type="range" id="sD4" onchange="plot()" type="range" min="-1.0" max="1.0" value="1.0" step=".1" />
         </div>
         <div class="label">
           <p>$$\langle \Phi_2 | \hat{\mu} | \Phi_{F_2} \rangle =$$</p>
@@ -94,7 +108,7 @@
         <div class="label">
           <p>$$c^2_1 =$$</p>
           <div class="value" id="vCI"></div>
-        </div>        
+        </div>
       </div>
     </div>
 
