@@ -47,7 +47,7 @@ input[type="range"]::-moz-range-thumb {
   gap: 1rem;
   max-width: 500px;
   margin: 0;
-  height: 3.6vh;  width: 50%;
+  height: 20%;  width: 50%;
   padding: 0px 10px;
 }
 
@@ -56,7 +56,7 @@ input[type="range"]::-moz-range-thumb {
   align-items: center;
   gap: 1rem;
   margin: 0;
-  height: 3.6vh;
+  height: 20%;
   width: 15%;
 }
 
@@ -71,6 +71,8 @@ input[type="range"]::-moz-range-thumb {
   height: 100vh;
   padding-top: 20px;
   padding-left: 20px;
+  display: flex;
+  flex-direction: column;
 }
 
 .upperpanel {
@@ -88,8 +90,14 @@ input[type="range"]::-moz-range-thumb {
   object-fit: contain;
 }
 
-.controls-panel .title_row {
-  height: 2vh;
+.controls-panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.controls-rows {
+  flex: 1 1 auto;
+  min-height: 0;
 }
 
 .energy-levels-panel .title_row,
@@ -97,12 +105,18 @@ input[type="range"]::-moz-range-thumb {
   margin-bottom: 20px;
 }
 
-.bottompane {
-  float: left;
-  width: 50%;
-  height: 76vh;
-  padding-bottom: 1%;
+.plots-row {
+  display: flex;
+  flex-direction: row;
+  flex: 1 1 auto;
+  min-height: 0;
   margin-top: 24px;
+}
+
+.bottompane {
+  width: 50%;
+  height: 100%;
+  padding-bottom: 1%;
   display: flex;
   flex-direction: column;
 }
@@ -113,6 +127,7 @@ body {
 
 .d-flex {
   display: flex;
+  flex: 0 0 auto;
 }
 
 .img-wrap {
