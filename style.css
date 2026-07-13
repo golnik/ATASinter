@@ -79,6 +79,12 @@ input[type="range"]::-moz-range-thumb {
   height: 20vh;
 }
 
+.buttons-panel {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .energy-levels-panel {
   display: flex;
   flex-direction: column;
