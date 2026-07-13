@@ -107,19 +107,24 @@
     </div>
   </div>
 
+  <div class="help-modal-overlay" id="help-modal-overlay" onclick="if (event.target === this) toggleHelp();">
+    <div class="help-modal-content">
+      <button class="help-modal-close" onclick="toggleHelp()">&times;</button>
+      <p><b>Welcome to the Attosecond Transient Absorption Spectroscopy (ATAS) learning tool!</b></p>
+      <p>This tool demonstrates an application of the ATAS to measure the coherent dynamics taking place
+      in the superposition of the two lowest quantum states of the system presented on the picture. Two upper states,
+      in turn, serve as the final states in the absorption process. Play with the parameters and see how intensities/phases
+      of the corresponding transitions change.</p>
+      <p>Visit our website <a href="https://ngolubev.com/" target="_blank" rel="noopener noreferrer">ngolubev.com</a> to see more interactive tools!</p>
+    </div>
+  </div>
+
   <script src="script.js"></script>
 
   <script>
     function toggleHelp() {
-      var message =
-'Welcome to the Attosecond Transient Absorption Spectroscopy (ATAS) learning tool!\n\n\
-This tool demonstrates an application of the ATAS to measure the coherent dynamics taking place \
-in the superposition of the two lowest quantum states of the system presented on the picture. Two upper states, \
-in turn, serve as the final states in the absorption process. Play with the parameters and see how intensities/phases \
-of the corresponding transitions change.\n\n\
-Visit our website https://ngolubev.com/ to see more interactive tools!';
-
-      alert(message);
+      var overlay = document.getElementById('help-modal-overlay');
+      overlay.style.display = overlay.style.display === 'flex' ? 'none' : 'flex';
     }
   </script>
 </body>
